@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escola - Grupo 4</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <main class="container">
+        <header>
+            <h1>Escola</h1>
+            <p>Grupo 4 - Sistema de cadastro de alunos</p>
+        </header>
+
+        <section class="form-section">
+            <h2>Cadastrar aluno</h2>
+
+            <% if (erro) { %>
+                <p class="error"><%= erro %></p>
+            <% } %>
+
+            <form action="/" method="POST">
+                <div class="form-group">
+                    <label for="aluno">Nome do aluno</label>
+                    <input
+                        type="text"
+                        id="aluno"
+                        name="aluno"
+                        maxlength="100"
+                        required
+                        placeholder="Digite o nome do aluno"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="turma">Turma</label>
+                    <input
+                        type="text"
+                        id="turma"
+                        name="turma"
+                        maxlength="50"
+                        required
+                        placeholder="Digite a turma"
+                    >
+                </div>
+
+                <button type="submit">Cadastrar aluno</button>
+            </form>
+        </section>
+
+        <section class="table-section">
+            <h2>Alunos cadastrados</h2>
+
+            <% if (alunos.length === 0) { %>
+                <p class="empty">Nenhum aluno cadastrado.</p>
+            <% } else { %>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Aluno</th>
+                            <th>Turma</th>
+                            <th>Data de cadastro</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% alunos.forEach((registro) => { %>
+                            <tr>
+                                <td><%= registro.id %></td>
+                                <td><%= registro.aluno %></td>
+                                <td><%= registro.turma %></td>
+                                <td><%= new Date(registro.data_cadastro).toLocaleString("pt-BR") %></td>
+                            </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            <% } %>
+        </section>
+    </main>
+</body>
+</html>
