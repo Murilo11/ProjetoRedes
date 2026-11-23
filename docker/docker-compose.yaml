@@ -14,7 +14,8 @@ services:
       - db_data:/var/lib/mysql
       - ../sql:/docker-entrypoint-initdb.d:ro,Z
     networks:
-      - escola-net
+      escola-net:
+        ipv4_address: 172.20.0.2
 
   wordpress:
     image: wordpress:latest
@@ -35,7 +36,29 @@ services:
     volumes:
       - wp_data:/var/www/html
     networks:
-      - escola-net
+      escola-net:
+        ipv4_address: 172.20.0.3
+
+  app:
+    build:
+      context: ../app
+    image: escola-app:latest
+    container_name: escola-app
+    restart: unless-stopped
+    depends_on:
+      - db
+    ports:
+      - "8004:8004"
+    environment:
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_USER: wp
+      DB_PASSWORD: wp123
+      DB_NAME: escola
+      PORT: 8004
+    networks:
+      escola-net:
+        ipv4_address: 172.20.0.4
 
 volumes:
   db_data:
